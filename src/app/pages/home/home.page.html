@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start">
+      <ion-icon color="primary" name="menu"></ion-icon>
+    </ion-menu-button>
+    <ion-title color="primary">Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" fill="clear" (click)="goToCartPage()" color="light">
+        <ion-icon color="primary" class="cart-badge" name="cart"></ion-icon>
+        <!-- <ion-badge color="secondary">0</ion-badge> -->
+        <ion-badge>{{total_cart}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content color="background">
+  <div style="margin: 20px;">
+    <ion-toolbar style="border-radius: 25px; border: 2px solid #e2e2e2; margin-top: 20px;">
+      <ion-searchbar animated="true" mode="ios" placeholder="Search our store" routerLink="/tabs/search" debounce="250"
+        class="search_bar">
+      </ion-searchbar>
+
+    </ion-toolbar>
+  </div>
+  <app-banner></app-banner>
+
+  <div class="top_categories">
+    <ion-item lines="none">
+      <ion-label class="label-cat">
+        <span>Top Categories</span>
+      </ion-label>
+      <ion-button color="primary" slot="end" size="small" fill="clear" class="icon-shop-more" (click)="AllCategories()">
+        <ion-label>
+          See More
+        </ion-label>
+        <ion-icon color="primary" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+
+    <div>
+
+
+      <ion-grid>
+        <ion-row *ngFor="let row of [Categories]; let i = index;">
+          <ion-col size="4" *ngFor="let p of row ">
+            <div (click)="OpenCategoryProduct(p.id,p.name)">
+              <img src="http://purefresh.demobrains.com/public/category_images/{{p.image_name}}" />
+              <p>{{p.name}}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+
+
+
+  <div class="back_image">
+    <ion-slides class="animated bounceInRight delay-900ms" [options]="sliderConfigProduct">
+      <ion-slide>
+        <ion-card class="card_info ion-card">
+          <div>
+            <p style="color: white; font-weight: normal;">
+              CHECK OUR
+            </p>
+            <p style="color: white; text-align: left; font-size: 22px;">
+              <span> New <br> Arrivals</span></p>
+          </div>
+        </ion-card>
+      </ion-slide>
+      <ion-slide *ngFor="let p of FeaturedProducts">
+        <ion-card class="ion-card">
+          <div (click)="OpenDetailPage(p.id)">
+
+
+            <img src="http://purefresh.demobrains.com/public/product_images/{{p.default_image}}"
+              style=" height: 130px;" />
+            <p style="text-align: center;">{{p.product_name}}</p>
+
+            <p> <span class="woo-price"> ₹ {{p.price}} </span></p>
+
+          </div>
+
+
+        </ion-card>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+
+  <div class="exclusive_collection">
+
+    <ion-item lines="none">
+      <ion-label class="label-cat">
+        <span>Exclusive Collection</span>
+      </ion-label>
+      <ion-button color="primary" slot="end" size="small" fill="clear" class="icon-shop-more" (click)="AllProducts()">
+        <ion-label>
+          See More
+        </ion-label>
+        <ion-icon color="primary" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let p of FeaturedProducts">
+            <ion-card>
+              <div (click)=OpenDetailPage(p.id)>
+                <img src="http://purefresh.demobrains.com/public/product_images/{{p.default_image}}" />
+                <ion-label>
+                  <p>{{p.product_name}}</p>
+                  <p>₹ {{p.price}}</p>
+                </ion-label>
+              </div>
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+  </div>
+
+</ion-content>

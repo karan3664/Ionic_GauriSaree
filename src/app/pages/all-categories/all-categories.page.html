@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title  color="primary">All Categories</ion-title>
+  
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="exclusive_collection">
+
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let p of Categories">
+            <ion-card>
+              <div (click)="OpenCategoryProduct(p.id, p.name)">
+                <img src="http://purefresh.demobrains.com/public/category_images/{{p.image_name}}" />
+                <ion-label>
+                  <p>{{p.name}}</p>
+                </ion-label>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+
+</ion-content>

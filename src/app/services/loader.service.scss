@@ -1,0 +1,8 @@
+.custom-loading {
+    --background: none;
+    background-color: transparent !important;
+    .loading-wrapper{
+        box-shadow: none !important;
+        -webkit-box-shadow: !important;
+    }
+ }

@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title color="primary">{{ProductName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" fill="clear" (click)="goToCartPage()" color="light">
+        <ion-icon color="primary" class="cart-badge" name="cart"></ion-icon>
+        <!-- <ion-badge color="secondary">0</ion-badge> -->
+        <ion-badge>{{total_cart}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="mainSlider">
+    <ion-slides class="product-slides" pager="true">
+      <ion-slide *ngFor="let slide of slides">
+        <div (click)="PhotoView(ProductName,slide.image_name)">
+          <img src="http://purefresh.demobrains.com/public/product_images/{{slide.image_name}}" imageViewer>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="product" *ngIf="ProductName != null">
+    <p>{{ProductName}}</p>
+
+    <p> ₹ {{Data.price}}</p>
+  </div>
+  <div class="Color" *ngIf="Color?.colors">
+    <ion-label>Select Color</ion-label>
+    <ion-grid>
+      <ion-row>
+
+        <div *ngFor="let slide of Color?.colors">
+          <ion-list>
+            <ion-radio-group allow-empty-selection="true" (ionChange)="MakeDefault($event)" #radioGroup
+              style="background: transparent;">
+              <ion-col size="3">
+                <div (ionFocus)="radioFocus()" (ionSelect)="radioSelect($event)" (ionBlur)="radioBlur()">
+                  <ion-radio mode="md" name="{{slide}}" [value]="slide">
+
+                  </ion-radio>
+                  <ion-thumbnail>
+                    <img *ngIf="slide.color_image != null"
+                      src="http://purefresh.demobrains.com/public/product_images/{{slide.color_image}}" />
+                    <img *ngIf="slide.color_image == null"
+                      src="http://purefresh.demobrains.com/public/front_assets/images/image_not_available.png" />
+                  </ion-thumbnail>
+
+                </div>
+              </ion-col>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div class="Size" *ngIf="Size?.length">
+    <ion-label>Select Size</ion-label>
+    <ion-grid>
+      <ion-row>
+        <div *ngFor="let item of Size">
+          <ion-list>
+            <ion-radio-group (ionChange)="MakeDefaultSize($event)">
+              <ion-col size="3">
+                <div>
+                  <ion-radio mode="md" name="{{item}}" [value]="item"></ion-radio>
+
+                  <ion-label>
+                    <p>{{item.size_name}}</p>
+                  </ion-label>
+
+                </div>
+              </ion-col>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+
+
+  <div *ngIf="ProductName != null" class="productDes">
+    <h2>Product Description</h2>
+    <div class="detail-para" [innerHTML]="Data.product_detail"></div>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="ProductName != null">
+  <ion-button (click)="goToCart()">ADD TO CART </ion-button>
+</ion-footer>

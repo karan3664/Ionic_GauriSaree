@@ -1,0 +1,33 @@
+<ion-header tappable>
+  <ion-toolbar color="light">
+    <ion-title color="primary">Add Coupon</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon color="primary" slot="icon-only"   name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card >
+
+
+    <ion-item style="margin: 10px;">
+  
+      <ion-input type="text" autocomplete="off" placeholder="Apply Coupon" name="coupon" [(ngModel)]="coupon" required
+        color="dark" clearInput></ion-input>
+    </ion-item>
+  
+  
+    <ion-button style="margin: 20px;" expand="full" shape="round" margin-top="10px" color="primary"
+      (click)="isCoupon()">
+      <ion-label color="light">
+        Apply
+      </ion-label>
+    </ion-button>
+  
+  
+   
+  </ion-card>
+</ion-content>

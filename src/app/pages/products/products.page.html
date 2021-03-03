@@ -1,0 +1,80 @@
+<ion-header tappable>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" routerLink="/home" routerDirection="backward">
+        <ion-icon slot="icon-only" src="assets/custom-icon-tc-shop/back.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="primary" class="ecom-title">All Products</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="goToSearchPage()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="goToCartPage()">
+        <ion-icon class="cart-badge" name="cart-outline"></ion-icon>
+        <ion-badge>{{total_cart}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="exclusive_collection">
+
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let p of Categories">
+            <ion-card>
+              <div (click)="OpenDetailPage(p.id)">
+                <img src="http://purefresh.demobrains.com/public/product_images/{{p.default_image}}" />
+                <ion-label>
+                  <p>{{p.product_name}}</p>
+                  <p> ₹ {{p.price}}</p>
+                </ion-label>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer class="products-footer" >
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+
+      <ion-button (click)="changeLayout()">
+        <ion-icon src="assets/interface.svg">
+
+        </ion-icon>
+
+
+        <ion-select #S [(ngModel)]="sortby" value="new" okText="Okay" (ionChange)="SortByOrder(S.value)"
+          cancelText="Dismiss">
+          <ion-select-option value="old">Old</ion-select-option>
+          <ion-select-option value="new">Latest</ion-select-option>
+          <ion-select-option value="price_low">Price (Low to High)</ion-select-option>
+          <ion-select-option value="price_high">Price (High to Low)</ion-select-option>
+          <ion-select-option value="name_a_z">Name (A to Z)</ion-select-option>
+          <ion-select-option value="name_z_a">Name (Z to A)</ion-select-option>
+        </ion-select>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+
+      <ion-button (click)="refresh()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+      <ion-menu-button (click)="openRightMenu()">
+        <ion-icon name="funnel"></ion-icon>
+      </ion-menu-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-item lines="none">
+      <ion-label>
+        <span>{{CategoryName}}</span>
+      </ion-label>
+
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="exclusive_collection">
+
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" *ngFor="let p of Categories">
+            <ion-card>
+              <div (click)="OpenDetailPage(p.id)">
+                <img src="http://purefresh.demobrains.com/public/product_images/{{p.default_image}}" />
+                <ion-label>
+                  <p>{{p.product_name}}</p>
+                  <p> ₹ {{p.price}}</p>
+                </ion-label>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+
+</ion-content>

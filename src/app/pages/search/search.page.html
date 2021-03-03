@@ -1,0 +1,61 @@
+<ion-header tappable>
+  <ion-toolbar color="light">
+    <ion-menu-button slot="start">
+      <ion-icon color="primary" name="menu"></ion-icon>
+    </ion-menu-button>
+    <ion-title color="primary">Search</ion-title>
+    <ion-buttons slot="end">
+
+      <ion-button fill="clear" (click)="goToCartPage()">
+        <ion-icon class="cart-badge" name="cart-outline"></ion-icon>
+        <ion-badge>{{total_cart}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<div>
+  <ion-searchbar [(ngModel)]="SelectedFruit" (ngModelChange)="getItems($event)" (ionFocus)="checkFocus('true')">
+  </ion-searchbar>
+</div>
+<ion-content>
+
+
+  <div *ngFor="let item of dummy">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-list *ngIf="showFruitList == true">
+    <ion-item *ngFor="let p of data" (click)="goToProductDetail(p.id)" routerDirection="forward">
+      <ion-avatar slot="start" class="animated flipInX delay-900ms">
+        <img src="http://purefresh.demobrains.com/public/product_images/{{p.product_image}}" />
+      </ion-avatar>
+      <ion-label padding>
+        <ion-text>
+          <h2>{{p.product_name}}</h2>
+
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+</ion-content>

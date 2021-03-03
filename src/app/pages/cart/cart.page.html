@@ -1,0 +1,172 @@
+<ion-header tappable>
+  <ion-toolbar color="light">
+
+    <ion-title color="primary" class="ecom-title">My Cart</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="mainContent">
+
+    <div *ngIf="gridVisiable">
+
+      <div class="card_div">
+        <div class="card" *ngFor="let list of CartItems?.cart_detail; let i = index">
+          <div class="mainCat">
+            <img src="http://purefresh.demobrains.com/public/product_images/{{list.product_detail.default_image}}"
+              class="image_div" alt="">
+            <!-- <div class="image_div" [style.backgroundImage]="'url('+item.cover+')'"></div> -->
+            <div class="desc_div">
+              <ion-label class="heading_lbl">{{list.product_detail.product_name}}</ion-label>
+              <div *ngIf="CartItems.cart_items.header_item[i].showData == false">
+                <ion-label class="small_lbl">
+                  <p>
+                    ₹ {{ CartItems.cart_items.header_item[i].total_price }}
+                  </p>
+                </ion-label>
+
+              </div>
+              <div *ngIf="CartItems.cart_items.header_item[i].showData == true">
+                <ion-label class="small_lbl">
+                  <!-- <p>Package:</p> -->
+                  <!-- <p> 1 {{ getpackagename( CartItems.cart_items.header_item[i]) }}</p> -->
+                  <p>
+                    {{  getpackageqty(CartItems.cart_items.header_item[i]) * CartItems.cart_items.header_item[i].qty }}
+                    {{CartItems.cart_detail[i].product_detail.unit_name}}</p>
+                  <p> ₹ {{ CartItems.cart_items.header_item[i].total_price }} </p>
+                  <!-- <p>{{ getDiscountPrice( CartItems.cart_items.header_item[i])}} %</p> -->
+
+                </ion-label>
+
+              </div>
+
+
+            </div>
+            <div class="cartBtn2" *ngIf="CartItems.cart_items.header_item[i].showData == false">
+              <ion-button
+                (click)="minusQuantity(CartItems.cart_items.header_item[i].product_id,i,CartItems.cart_items.header_item[i].price,CartItems.cart_items.header_item[i].qty , CartItems.cart_items.header_item[i].color_id, CartItems.cart_items.header_item[i].size_id)"
+                fill="clear" size="small">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+              <p class="qunitity"
+                (click)="AddQtySingle(CartItems.cart_items.header_item[i].product_id, i , CartItems.cart_items.header_item[i].price, CartItems.cart_items.header_item[i].qty)">
+                {{ CartItems.cart_items.header_item[i].qty }}</p>
+              <ion-button
+                (click)="addQuantity(CartItems.cart_items.header_item[i].product_id,i,CartItems.cart_items.header_item[i].price,CartItems.cart_items.header_item[i].qty , CartItems.cart_items.header_item[i].color_id, CartItems.cart_items.header_item[i].size_id)"
+                fill="clear" size="small">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </div>
+
+            <div class="cartBtn2" style="margin-top: 0px;align-self: center; text-align: center; align-items: center;">
+              <ion-button
+                (click)="Delete(CartItems.cart_items.header_item[i].product_id,CartItems.cart_items.header_item[i].color_id, CartItems.cart_items.header_item[i].size_id)"
+                fill="clear" size="small">
+                Remove
+              </ion-button>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="coupones">
+        <div class="card_div">
+          <div class="upper_div">
+
+
+
+            <img src="assets/discount.png" class="badge" />
+            <ion-label class="title" (click)="AppLyCoupon()">Apply coupon code
+            </ion-label>
+          </div>
+          <div class="lower_div" *ngIf="CoponsList">
+            <img src="assets/bin.svg" color="primary" class="badge"
+              (click)="RemoveCoupon(CartItems.cart_items.coupon_detail.id)" />
+            <div>
+              <ion-label class="title">
+                Coupon Name : {{ CoponsList }}
+                <div *ngIf="CartItems.cart_items.coupon_detail.DisFla == false">
+                  Discount : {{ coupon_discount }} %
+                </div>
+
+                <div *ngIf="CartItems.cart_items.coupon_detail.DisFla == true">
+                  Discount : {{ coupon_discount }} Rs. Flate
+                </div>
+
+
+              </ion-label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="billing">
+        <div class="singleRow">
+          <ion-label class="headerTitle">{{'Item Total'}}</ion-label>
+          <ion-label class="price">₹ {{totalPrice}} </ion-label>
+        </div>
+        <!-- <div class="singleRow">
+          <ion-label class="headerTitle">Taxes & Charges</ion-label>
+          <ion-label class="price">₹ {{serviceTax}} </ion-label>
+        </div>
+        <div class="singleRow">
+          <ion-label class="headerTitle">Delivery Charges</ion-label>
+          <ion-label class="price">₹ {{deliveryCharge}} </ion-label>
+        </div> -->
+        <div class="singleRow" *ngIf="CoponsList">
+          <ion-label class="headerTitle">Dicount</ion-label>
+          <ion-label class="price">₹ {{dicount}} </ion-label>
+        </div>
+        <div class="singleRow">
+          <ion-label class="headerTotal boldClass">Grand Total</ion-label>
+          <ion-label class="priceTotal boldClass"> ₹ {{grandTotal}} </ion-label>
+        </div>
+      </div>
+      <!-- <p class="instructions">
+        Orders once placed cannot be cancelled and are non-refundable
+      </p> -->
+    </div>
+  </div>
+
+  <!-- when no data found -->
+  <ion-grid class="topp" no-padding *ngIf="!gridVisiable">
+    <ion-row no-padding>
+      <ion-col size="12" no-padding>
+        <ion-icon class="cart-badge" color="primary" name="cart-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col size="12" no-padding>
+        <h4>Your Cart is empty</h4>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col size="12" no-padding>
+        <p>Continue shopping</p>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col size="12" no-padding>
+        <ion-button (click)="openProductsPage()">Explore</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer *ngIf="gridVisiable">
+  <ion-grid>
+    <ion-row style="text-align: center; align-items: center;">
+      <ion-col size="6" style="text-align: center; align-items: center; font-size: 20px;">
+        <ion-label color="light"><span> ₹ {{grandTotal}}</span></ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="CheckOutPage()" color="primary">Check Out</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>
